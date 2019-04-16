@@ -1,7 +1,7 @@
 // DEPENDENCIES
 const express = require('express');
 const app = express();
-const marsMissions = require('./models/marsMissions');
+const marsMissions = require('./models/marsMissions.js');
 const bodyParser = require('body-parser');
 // run `npm install` to install dependencies in package.json
 
@@ -44,20 +44,28 @@ app.use(bodyParser.json());
 // send data to 'missions/index.ejs' view
 // the view should display just the names of each mission
 // display the mission names as <li> in a <ul> with the class name "missions"
+// app.get('/marsMissions', (req,res)=>{
+//   res.send(marsMissions)
+// });
 
-app.get('/missions', (req,res) => {
-  res.render(`index.ejs`, {
-      missions : marsMissions
-  });
-});
+app.get('/marsMissions/', (req,res) => {
+  res.render('missions/index.ejs', {
+      marsMissions : marsMissions
+  })
+})
+// app.get('index.ejs', (req,res) => {
+//   res.send('missions/index.ejs', {
+//       marsMissions : marsMissions
+//   });
+// });
 // SHOW Route
 // send data to 'missions/show.ejs' view
 // the view should display all the data for a single mission
-app.get('/marsMissions/show/:id', (req,res)=>{
-  res.render(`show.ejs`, {
+app.get('/marsMissions/:id', (req,res)=>{
+  res.render('/missions/show.ejs', {
       marsMissions : marsMissions[req.params.id]
-  });
-});
+  })
+})
 
 // LISTENER
 app.listen(port, function() {
